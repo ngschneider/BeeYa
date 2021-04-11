@@ -17,6 +17,16 @@ const layout = {
 
 export default class Landing extends React.Component {
 
+    loginFetch(username, password){
+        let input = {
+            username:username,
+            password:password
+        }
+        LandingREST.login(input, (response) => {
+            console.log(response)
+        });
+    }
+
     render() {
         return (
             <Layout classname="Landing">
