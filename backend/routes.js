@@ -1,54 +1,49 @@
 const express = require("express");
 const router = express.Router();
 const sqlCommand = require("./database/sqlCommand.js")
+const post = require("./route/Post.js");
+const user = require("./Route/User.js");
+const login = require("./route/Login.js");
 
-router.get("/test", (req,res) =>	{
-	console.log("received!");
-	let s = sqlCommand.insert("users",["username","displayname","email","password","created_at","followerCount","postsCount", "user_bio", "user_profile_img_id"],
-							["testUser",  "testUser", "testUser@gmail.com" ,"TEST","12/12/2021",0,0,"test test test", 34523452345234]);
-								console.log(s);
-	let t = sqlCommand.select("Users","username","test");
-	sqlCommand.send([s], (results)=> {
-		console.log(results)
-
-	})
-	res.send("Request successfully received and sent!");
-});
 
 router.get("/User:input", (req,res) =>	{
 	let input = JSON.parse(req.params.input);
-	console.log(input)
-	let t = sqlCommand.select("Users","username",input.username);
-	sqlCommand.send([t], (results)=> {
-		//console.log(results)
-		res.send(results[0])
-	})
+	user.getUser(input.username, (results) => {
+		res.send(results);
+	});
 });
 
-router.get("/CreateUser:input", (req,res) =>	{
+router.post("/User:input", (req,res) =>	{
 	console.log("received!");
 	let input = JSON.parse(req.params.input);
-	let s = sqlCommand.insert("Users",["username","displayname","email","password","created_at"],
-							[input.username,  input.displayname, input.email ,input.password, getDate()]);
-								console.log(s);
-	
-	sqlCommand.send([s], (results)=> {
-		console.log(results)
-		res.send("{created:true}");
-	})
+	user.createUser(input.username, input.displayname, input.email, input.password, getDate(), (result) => {
+		res.send(result);
+	});
 });
 
+router.get("/Login:input", (req,res) => {
+	let input = JSON.parse(req.params.input);
+	login.loginAttempt(input.username,input.password, (results) => {
+		res.send(results);
+	});
+});
+
+// Retreive post
 router.get("/Post:input", (req,res) =>	{
 	let input = JSON.parse(req.params.input);
-	//console.log(input)
-	let t = sqlCommand.select("Posts","user_id",input.id);
-	sqlCommand.send([t], (results)=> {
-		console.log(results)
-		let response = results[0];
-		response.reply = results[1];
+	post.getPost(input.id, (response) => {
 		res.send(response);
-	})
+	});
 });
+
+router.post("/Post:input", (req,res) =>	{
+	let input = JSON.parse(req.params.input);
+	post.createPost(input.id, input.text, getDate(), (response) => {
+		res.send(response);
+	});
+	
+});
+
 function getDate() {
 	let dateObj = new Date();
 		let date = dateObj.getFullYear() + "-" + dateObj.getMonth() + "-" + dateObj.getDate();
