@@ -11,3 +11,5 @@ export const login = (DATA,cb) => {
     });
 
 }
+
+export default login;
