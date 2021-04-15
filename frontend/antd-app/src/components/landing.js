@@ -15,15 +15,38 @@ const layout = {
     wrapperCol: { span:24 },
   };
 
-
-      
+  //callback function to validate user & display name length
+  const validateName = (rule, value, callback) => {
+    if (value && value.length < 3) {
+      callback("Must be at least 3 characters long");
+    } else {
+      callback();
+    }
+  };
+  
+  //callback function to validate password length
+  const validatePassword = (rule, value, callback) => {
+    if (value && value.length < 8) {
+      callback("Password must be at least 8 characters long");
+    } else {
+      callback();
+    }
+  };
 
 export default class Landing extends React.Component {
     state = {visible: false}
 
-    validatePassword= (rule, value, cb) => {
+    /*Incomplete*/
+   signUpFetch(username, displayname, email, password) {
+       let input = {
+        username:username,
+        displayname:displayname,
+        email:email,
+        password:password
+       }
 
-    }
+       
+   }
 
     loginFetch(username, password){
         let input = {
@@ -43,14 +66,16 @@ export default class Landing extends React.Component {
         this.loginFetch(values.username, values.password);
     }
 
-    /*Unfinished*/
     handleCreateAccountSubmit = (values) => {
         const user = values.username;
         const pass = values.password;
         const email = values.email;
         const disp = values.displayname;
-
-
+        console.log(user);
+        console.log(pass);
+        console.log(email);
+        console.log(disp);
+        this.signUpFetch(user, disp, email, pass);
     }   
 
     showModal = () => {
@@ -123,7 +148,8 @@ export default class Landing extends React.Component {
                     <Col span={24}>
                         <Form.Item
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[{ required: true, message: 'Please input your password!',
+                                    validator: validatePassword}]}
                             style={{width: "345px"}}
                             wrapperCol={{span:24}}
                         >
@@ -138,6 +164,8 @@ export default class Landing extends React.Component {
                 <div style={{width: "300px", marginLeft:"30px", textAlign:"center"}}>
                     <Divider style={{borderColor: "black", borderWidth:"0.5px"}} plain="false">OR</Divider>
                 </div>
+                
+
                 
                 {/*Create New Account Button opens Modal*/}
                 <Button type="primary" htmlType="button" size={"large"} 
@@ -156,12 +184,14 @@ export default class Landing extends React.Component {
                     initialValues={{ remember: true }}
                     style={{margin: "10px 10px 10px"}}
                     onFinish={(values) => this.handleCreateAccountSubmit(values)}
+                    validator={validatePassword}
                 >
                     <Row >
-                        <Col span={11}>
+                        <Col span={12}>
                             <Form.Item
                                 name="username"
-                                rules={[{ required: true, message: 'Please input your username!' }]}
+                                rules={[{ required: true, message: 'Please input your username!'},
+                                {validator: validateName}]}
                                 wrapperCol={{span:24}}
                                 margin={"2px 2px 2px 2px"}
                             >
@@ -170,11 +200,12 @@ export default class Landing extends React.Component {
                                     style={{borderRadius: "5px"}}/>
                             </Form.Item>
                         </Col>
-                        <Col span={13}>
+                        <Col span={12}>
                             <Form.Item
-                                name="display name"
-                                rules={[{ required: true, message: 'Please your display name!' }]}
-                                wrapperCol={{span:24, offset: 2}}
+                                name="displayname"
+                                rules={[{ required: true, message: 'Please enter your display name!'},
+                                {validator: validateName}]}
+                                wrapperCol={{span:24, offset: 1}}
                                 
                             >
                                 <Input
@@ -186,26 +217,25 @@ export default class Landing extends React.Component {
                     <Row >
                         <Col span={24}>
                             <Form.Item
-                                name="Email"
-                                rules={[{ required: true, message: 'Please input your email!' }]}
+                                name="email"
                                 wrapperCol={{span:24}}
                             >
                                 <Input
-                                    size="large" placeholder="Email" style={{borderRadius: "5px"}}/>
+                                    size="large" placeholder="Email (Optional)" style={{borderRadius: "5px"}}/>
                             </Form.Item>
                         </Col>
                     </Row>
                     <Row >
                         <Col span={24}>
                             <Form.Item
-                                name="Password"
+                                name="password"
                                 rules={[{ required: true, message: 'Please input your password!' },
-                                        { validator: this.validatePassword}]}
+                                        { validator: validatePassword}]}
                                 wrapperCol={{span:24}}
-                                
                             >
                                 <Input
-                                    size="large" placeholder="Password" style={{borderRadius: "5px"}} type="password"/>
+                                    size="large" placeholder="Password" style={{borderRadius: "5px"}} type="password"
+                                    />
                             </Form.Item>
                         </Col>
                     </Row>
