@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Switch } from 'antd';
 import './App.css';
 import AppHeader from './components/landing';
 import {Layout} from 'antd';
+import { BrowserRouter, Route } from 'react-router-dom';
 const { Header, Footer, Sider, Content } = Layout;
 
-const App = () => (
- <AppHeader/>
-);
-
-export default App;
+export default function App() {
+    return (
+        <AppHeader/>
+    )
+ }

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {useHistory} from 'react-router-dom';
 import {Layout} from 'antd';
 import { Image, Divider, Form, Input, Button } from 'antd';
 import {Row, Col} from 'antd';
@@ -15,6 +16,12 @@ const layout = {
     wrapperCol: { span:24 },
   };
 
+  function DoSomething() {
+    const history = useHistory();
+    const handleOnClick = () => history.push('/sample');
+  }
+  
+
   //callback function to validate user & display name length
   const validateName = (rule, value, callback) => {
     if (value && value.length < 3) {
@@ -23,7 +30,8 @@ const layout = {
       callback();
     }
   };
-  
+
+
   //callback function to validate password length
   const validatePassword = (rule, value, callback) => {
     if (value && value.length < 8) {
@@ -33,9 +41,10 @@ const layout = {
     }
   };
 
+  
 export default class Landing extends React.Component {
     state = {visible: false}
-
+    
     /*Incomplete*/
    signUpFetch(username, displayname, email, password) {
        let input = {
@@ -54,16 +63,22 @@ export default class Landing extends React.Component {
             password:password
         }
         login(input, (response) => {
-            console.log(response)
+            console.log(response);
+
+            if(response.login) {
+                this.props.history.push("/Home");
+                
+            }
         });
     }
 
     handleSubmit = (values) => {
         const user = values.username;
         const pass = values.password;
+        
         console.log(user);
         console.log(pass);
-        this.loginFetch(values.username, values.password);
+        this.loginFetch(user, pass);
     }
 
     handleCreateAccountSubmit = (values) => {
@@ -148,8 +163,7 @@ export default class Landing extends React.Component {
                     <Col span={24}>
                         <Form.Item
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!',
-                                    validator: validatePassword}]}
+                            rules={[{ required: true, message: 'Please input your password!'}]}
                             style={{width: "345px"}}
                             wrapperCol={{span:24}}
                         >
@@ -241,7 +255,8 @@ export default class Landing extends React.Component {
                     </Row>
                     <Form.Item>
                     <Button type="primary" htmlType="submit" size={'large'} 
-                    style={{paddingInline:"200px", backgroundColor:"green", borderColor:"green", height:"50px"}}>Sign Up</Button>
+                    style={{paddingInline:"200px", backgroundColor:"green", borderColor:"green", height:"50px"
+                    }}>Sign Up</Button>
                     </Form.Item>
                 </Form>
                 </Modal>
@@ -250,7 +265,7 @@ export default class Landing extends React.Component {
             </Content>
             <div class = "footer">
                 <Footer style={{textAlign: 'right', 
-                            position: 'fixed',
+                            position: 'relative',
                             left: 0,
                             bottom: 0,
                             width: '100%',
