@@ -10,8 +10,6 @@ loginAttempt = (username,password, callback) => {
             callback({login:false})
         }
     });
-
-   
 }
 
 

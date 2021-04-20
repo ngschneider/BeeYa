@@ -9,11 +9,12 @@ class FetchServer {
           result:null,
           error: null
      }
-    fetchRouteServer(ROUTE,DATA_SEND,callback){
+
+    fetchRouteServer(ROUTE,DATA_SEND,options,callback){
       // DATA_SEND SHOULD BE JSON
-        
+      
         let mysqlServer="http://localhost:444";
-        fetch( mysqlServer + ROUTE + "" +  JSON.stringify(DATA_SEND) + "" )
+        fetch( mysqlServer + ROUTE + "" +  JSON.stringify(DATA_SEND) + "" ,options)
         .then(res => res.json())
         .then(
           (serverResponse) => {

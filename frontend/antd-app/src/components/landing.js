@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {Layout} from 'antd';
 import { Image, Divider, Form, Input, Button } from 'antd';
 import {Row, Col} from 'antd';
-import {login} from '../Fetching/LandingREST';
+import {login,createAccount} from '../Fetching/LandingREST';
 import Modal from 'antd/lib/modal/Modal';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -53,6 +53,17 @@ export default class Landing extends React.Component {
         email:email,
         password:password
        }
+       
+       createAccount(input, (response) => {
+
+            if(response.created){
+                console.log("Account created")
+
+            }else {
+                console.log("Account Failed To Create")
+            }
+
+       })
 
        
    }
