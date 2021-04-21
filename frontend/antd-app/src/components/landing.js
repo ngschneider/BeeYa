@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {useHistory} from 'react-router-dom';
-import {Layout} from 'antd';
+import {Layout, Row, Col} from 'antd';
 import { Image, Divider, Form, Input, Button } from 'antd';
-import {Row, Col} from 'antd';
 import {login,createAccount} from '../Fetching/LandingREST';
 import Modal from 'antd/lib/modal/Modal';
 
@@ -16,10 +13,6 @@ const layout = {
     wrapperCol: { span:24 },
   };
 
-  function DoSomething() {
-    const history = useHistory();
-    const handleOnClick = () => history.push('/sample');
-  }
   
 
   //callback function to validate user & display name length
@@ -56,8 +49,9 @@ export default class Landing extends React.Component {
        
        createAccount(input, (response) => {
 
-            if(response.created){
-                console.log("Account created")
+            if(response.user){
+                console.log("Account Created")
+                this.props.history.push("/Home");
 
             }else {
                 console.log("Account Failed To Create")
@@ -78,7 +72,6 @@ export default class Landing extends React.Component {
 
             if(response.login) {
                 this.props.history.push("/Home");
-                
             }
         });
     }

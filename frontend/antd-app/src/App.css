@@ -98,12 +98,32 @@ p {
   text-shadow: 0px 0px 12px black;
 }
 .status {
-  border-radius: 10px;
-  border: 1px solid grey;
-  text-align: center;
+  border-bottom: 1px solid grey;
+  font-size: 20px;
+  font-weight: bold;
   position:relative;
-  height: 300px;
-  width: 100%;
-  margin: auto;
+  height: 225px;
+  width: 500px;
+  padding-top: 15px;
   display:block;
+}
+
+.status h1 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.statusTextArea {
+  font-size: inherit;
+}
+.statusButtons {
+text-align: center;
+}
+.centerFeed {
+  border: 1px solid grey;
+  border-bottom: hidden;
+  height: 100vh;
+  width: fit-content;
+  display: block;
+  margin-left: 200px;
 }
