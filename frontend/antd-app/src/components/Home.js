@@ -3,6 +3,7 @@ import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar} f
 import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
+import {getFollowers} from '../Fetching/HomeREST'
 
 const { Header, Footer, Sider, Content } = Layout;
 const {TextArea} = Input;
@@ -13,7 +14,6 @@ const onChange = e => {
   };
 
 export default class Home extends Component {
-
     
     render() {
         return (
