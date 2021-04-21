@@ -53,7 +53,7 @@ export default class Landing extends React.Component {
         email:email,
         password:password
        }
-       
+
        createAccount(input, (response) => {
 
             if(response.created){
@@ -64,8 +64,6 @@ export default class Landing extends React.Component {
             }
 
        })
-
-       
    }
 
     loginFetch(username, password){

@@ -22,7 +22,7 @@ router.post("/Follow:input", (req,res) => {
 
 router.post("/Unfollow:input", (req,res) => {
 	let input = JSON.parse(req.params.input);
-	UserInformation.unFollowUser(input.id,input.followedId, (result) => {
+	UserInformation.unFollowUser(input.id,input.follwedId, (result) => {
 		res.send(result);	
 	});
 });
