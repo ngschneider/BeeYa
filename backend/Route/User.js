@@ -5,7 +5,11 @@ createUser = (username,displayname,email,pass,date,callback) => {
     [username,  displayname, email , pass, date]);
     sqlCommand.send([statement], (results)=> {
         console.log(results);
-        callback({user:true});
+        if(results.errnum == 1){
+            callback({created:true});
+        }else {
+            callback({created:false});
+        }
     })
 }
 
@@ -17,6 +21,8 @@ getUser = (username, callback) => {
 	})
 
 }
+
+
 
 exports.getUser=getUser;
 exports.createUser=createUser;

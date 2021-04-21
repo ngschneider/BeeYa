@@ -13,6 +13,19 @@ createPost = (userid, text, date, callback) => {
 	});
 }
 
+createReply = (userid,replyToID ,text, date, callback) => {
+    let tableRow = ["posttext", "created_at", "user_id", "in_reply_to_postid"];
+    let tableColumn = [text, date, userid,replyToID];
+	let statement = sqlCommand.insert("Posts", tableRow, tableColumn );
+	sqlCommand.send([statement], (result) => {
+		if(result.errnum == 1){
+			callback(createPostSuccess())
+		}else {
+			callback(createPostFailed())
+		}
+	});
+}
+
 getPost = (userid, callback) => {
 	let statement = sqlCommand.select("Posts", "user_id", userid);
 	sqlCommand.send([statement], (results) => {
@@ -35,3 +48,5 @@ createPostFailed = () => {
 
 exports.createPost = createPost;
 exports.getPost = getPost;
+exports.createReply = createReply;
+

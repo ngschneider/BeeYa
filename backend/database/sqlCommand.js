@@ -56,7 +56,11 @@ const ErrorRecovery = require("./errorRecovery");
 	}
 
 	const deleteRecord = (table,column,value) => {
-		let sqlString = `DELETE FROM ${table} WHERE ${column}=\'${value}\';`;
+		let sqlString = `DELETE FROM ${table} WHERE ${column[0]}=\'${value[0]}\'`;
+		for(let i =1; i < column.length; i++){
+			sqlString += ` AND ${column[i]}=\'${value[i]}\'`;
+		}
+		sqlString += ";";
 		return sqlString;
 	}
 
