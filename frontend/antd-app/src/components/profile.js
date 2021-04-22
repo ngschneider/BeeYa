@@ -51,28 +51,28 @@ export default class Profile extends Component {
         });
         
     }
-
-    // Not working
+    //TODO: NOT WORKING
     createContentFollowing = ()  => {
-        let content =  <div>
-            {this.state.followers.forEach( (element) => {
-                <p> {element.followedUser + "since " + element.create_at} </p>
+        let content =  (
+        <div>
+            {this.state.followers.forEach( (element, index) => {
+                console.log(element.created_at);
+               return <p key={index}> {element.followedUser + "since " + element.created_at} </p>
             })}
         </div>
-        
+        )
+        console.log(content)
         return content;
     }
-    // Not working
     createContentMyTweets = ()  => {
         const content =  
         <div>
             {this.state.myPosts.map( (element, index) => {
-                console.log(element.posttext);
-                <p key={index}> {element.posttext} </p>;
+              return  <p key={index}> {element.posttext} </p>
             })}
         </div>
         
-        console.log(content)
+     //   console.log(content)
         return content;
     }
 
