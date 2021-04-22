@@ -15,7 +15,7 @@ router.get("/User:input", (req,res) =>	{
 
 router.post("/Follow:input", (req,res) => {
 	let input = JSON.parse(req.params.input);
-	UserInformation.followUser(input.id,input.follwedId, getDate(), (result) => {
+	UserInformation.followUser(input.id,input.followedId, getDate(), (result) => {
 		res.send(result);	
 	});
 });

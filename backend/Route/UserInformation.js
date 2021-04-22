@@ -9,7 +9,7 @@ followUser = (userId, toFollowId, date, callback) => {
     sqlCommand.send([statement], result =>{
         console.log(result);
         
-        if(result.errnum){
+        if(result.errnum == 1){
             callback({followed:true});
         }else{
             callback({followed:false});
@@ -38,10 +38,15 @@ unFollowUser = (userId,followId, callback) => {
 getFollowers = (userId, callback) => {
     let table = "FollowingTable";
     let column = "followingUser";
-
+    console.log(userId);
     let statement = sqlCommand.select(table, column, userId);
+    console.log(statement);
     sqlCommand.send([statement], result => {
-        callback(result)
+        console.log(result)
+        let response = {
+            followers:result
+        }
+        callback(response)
     });
 }
 
