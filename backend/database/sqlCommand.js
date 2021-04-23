@@ -54,6 +54,12 @@ const ErrorRecovery = require("./errorRecovery");
 		return selectStatement;
 	
 	}
+	const selectColumn = (tableName, column, value, getColumn) => {
+		let selectStatement = `SELECT ${getColumn} FROM ${tableName} WHERE ${column}=\'${value}\';`;
+		
+		return selectStatement;
+	
+	}
 
 	const deleteRecord = (table,column,value) => {
 		let sqlString = `DELETE FROM ${table} WHERE ${column[0]}=\'${value[0]}\'`;
