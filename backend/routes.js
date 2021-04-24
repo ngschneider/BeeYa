@@ -6,6 +6,12 @@ const user = require("./Route/User.js");
 const login = require("./route/Login.js");
 const UserInformation = require("./Route/UserInformation.js");
 
+
+router.get("/test:", (req,res) =>{
+	let input = JSON.parse(req.params.input);
+
+	user.getUserName()
+});
 router.get("/User:input", (req,res) =>	{
 	let input = JSON.parse(req.params.input);
 	user.getUser(input.username, (results) => {
@@ -33,6 +39,20 @@ router.get("/Following:input", (req,res) => {
 		res.send(result);	
 	});
 });
+
+router.post("/Tweet/Like:input", (req,res) => {
+	let input = JSON.parse(req.params.input);
+	post.setLike(input.postId,input.userId, (result) => {
+		res.send(result);	
+	});
+});
+router.post("/Tweet/Retweet:input", (req,res) => {
+	let input = JSON.parse(req.params.input);
+	post.setLike(input.postId,input.userId, getDate(), (result) => {
+		res.send(result);	
+	});
+});
+
 router.post("/User:input", (req,res) =>	{
 	console.log("received!");
 	let input = JSON.parse(req.params.input);

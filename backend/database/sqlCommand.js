@@ -54,9 +54,24 @@ const ErrorRecovery = require("./errorRecovery");
 		return selectStatement;
 	
 	}
+
 	const selectColumn = (tableName, column, value, getColumn) => {
 		let selectStatement = `SELECT ${getColumn} FROM ${tableName} WHERE ${column}=\'${value}\';`;
 		
+		return selectStatement;
+	
+	}
+
+	const update = (tableName, column, value, id) => {
+		let selectStatement = `UPDATE ${tableName} SET ${column} = ${column} + \'${value}\' WHERE post_id = \'${id}\';`;
+
+		return selectStatement;
+	
+	}
+
+	const count = (tableName, column) => {
+		let selectStatement = `SELECT COUNT(${column}) AS COUNT FROM ${table};`;
+
 		return selectStatement;
 	
 	}
@@ -74,3 +89,6 @@ exports.insert = insert;
 exports.send = send;
 exports.deleteRecord = deleteRecord;
 exports.select = select;
+exports.selectColumn = selectColumn;
+exports.update = update;
+exports.count = count;

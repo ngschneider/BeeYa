@@ -94,6 +94,7 @@ export default class Profile extends Component {
     handleHomeClick = () => {
         this.props.history.push("/Home");
     }
+    
     render(){
         
         const following = this.createContentFollowing();

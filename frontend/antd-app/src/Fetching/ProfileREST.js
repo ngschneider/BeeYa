@@ -31,3 +31,35 @@ export const getPosts = (DATA,cb) => {
     });
 
 }
+
+export const likeTweet = (DATA,cb) => {
+    let route = "/Tweet/Like";
+    
+    let options = {
+        method : 'Post'
+    }
+
+    let fetch = new FetchServer();
+    console.log(JSON.stringify(DATA))
+
+    fetch.fetchRouteServer( route, DATA, options, (response) => {
+        cb(response);
+    });
+
+}
+
+export const retweet = (DATA,cb) => {
+    let route = "/Tweet/Retweet";
+    
+    let options = {
+        method : 'Post'
+    }
+
+    let fetch = new FetchServer();
+    console.log(JSON.stringify(DATA))
+
+    fetch.fetchRouteServer( route, DATA, options, (response) => {
+        cb(response);
+    });
+
+}

@@ -37,6 +37,32 @@ getPost = (userid, callback) => {
 	});
 }
 
+setLike = (postId, userId, callback) => {
+	let tableRow = ["post_id", "likingUser_id"];
+    let tableColumn = [postId, userId];
+	let statement = sqlCommand.insert("Likes", tableRow, tableColumn );
+	sqlCommand.send([statement], (result) => {
+		if(result.errnum == 1){
+			callback(createPostSuccess())
+		}else {
+			callback(createPostFailed())
+		}
+	});
+}
+
+setRetweet = (postId, userId, date, callback) => {
+	let tableRow = ["post_id", "user_id", date];
+    let tableColumn = [postId, userId, date];
+	let statement = sqlCommand.insert("rebuzz", tableRow, tableColumn );
+	sqlCommand.send([statement], (result) => {
+		if(result.errnum == 1){
+			callback(createPostSuccess())
+		}else {
+			callback(createPostFailed())
+		}
+	});
+}
+
 
 createPostSuccess = () =>{
 	return {post:true}
@@ -47,6 +73,8 @@ createPostFailed = () => {
 }
 
 exports.createPost = createPost;
+exports.setLike = setLike;
+exports.setRetweet = setRetweet;
 exports.getPost = getPost;
 exports.createReply = createReply;
 
