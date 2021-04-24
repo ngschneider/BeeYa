@@ -65,7 +65,12 @@ export default class Landing extends React.Component {
 
             if(response.user){
                 console.log("Account Created")
-                this.props.history.push("/Home");
+                this.props.history.push({
+                    pathname:"/Home",
+                    state:{
+                        username:response.user
+                    }
+                });
 
             }else {
                 console.log("Account Failed To Create")

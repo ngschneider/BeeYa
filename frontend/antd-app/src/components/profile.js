@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 
 import {getFollowers,getPosts} from '../Fetching/ProfileREST'
 
-
 import Tweet from './Tweet';
 const {Sider, Content} = Layout;
 export default class Profile extends Component {
@@ -13,6 +12,8 @@ export default class Profile extends Component {
     constructor(){
         super();
         this.state = {
+            username:"",
+            userId:-1,
             followerCount:0,
             followingCount:0,
             followers: [],
@@ -22,8 +23,12 @@ export default class Profile extends Component {
     }
     //Change to Correct userID
     componentDidMount(){
-        this.followerFetch(1);
-        this.myPostFetch(1);
+        this.setState({
+            username:this.props.location.state.username,
+            userId:this.props.location.state.userid
+        });
+        this.followerFetch(this.props.location.state.userid);
+        this.myPostFetch(this.props.location.state.userid);
     }
 
     followerFetch = (userId) => {
@@ -92,10 +97,15 @@ export default class Profile extends Component {
     }
 
     handleHomeClick = () => {
-        this.props.history.push("/Home");
+        this.props.history.push({
+            pathname:"/Home",
+            state:{
+                username:this.state.username
+            }
+        });
     }
-    
-    render(){
+
+    render() {
         
         const following = this.createContentFollowing();
 
@@ -136,7 +146,7 @@ export default class Profile extends Component {
                         <div className="profile_header">
                                 
                             {/*Swap "CurrentUsername" for reactive currentUser*/}
-                            <div className="profile_header_username">{"CurrentUsername"}</div>
+                            <div className="profile_header_username">{this.state.username + "'s profile" }</div>
                             <br/>
                             <div className="profile_header_buzzes">{this.state.myPosts.length + " buzzes"}</div>
                             

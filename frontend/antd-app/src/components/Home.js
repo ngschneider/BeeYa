@@ -57,7 +57,6 @@ export default class Home extends Component {
             id:uid,
             text:postText
         }
-        console.log("asdfasdfasdfasdfasd")
         postTweet(input, (response) => {
             console.log(response);
        });
@@ -72,7 +71,13 @@ export default class Home extends Component {
    
     handleProfileClick = () =>{
         this.props.history.push("/Profile");
-        
+        this.props.history.push({
+            pathname:"/Profile",
+            state:{
+                username:this.state.username,
+                userid:this.state.userid
+            }
+        });
     }
     componentDidMount(){
         this.getUserId(this.props.location.state.username);
