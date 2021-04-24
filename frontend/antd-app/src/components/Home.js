@@ -4,6 +4,7 @@ import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutl
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
 import {getFollowers} from '../Fetching/HomeREST'
+import {getPosts} from '../Fetching/ProfileREST'
 
 const { Header, Footer, Sider, Content } = Layout;
 const {TextArea} = Input;
@@ -15,6 +16,25 @@ const onChange = e => {
 
 export default class Home extends Component {
     
+    feedPostsFetch(uid){
+        let input = {
+            id:uid
+        }
+        getPosts(input, (response) => {
+            console.log(response);
+        });
+    }
+
+    loadPosts = (id) => {
+       this.feedPostsFetch(1);
+      
+    }
+
+   
+    handleProfileClick = () =>{
+        this.props.history.push("/Profile");
+        
+    }
     render() {
         return (
                 <Layout>
@@ -31,7 +51,8 @@ export default class Home extends Component {
                             <Menu.Item key="1" icon={<HomeOutlined />}>
                                 Home
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<UserOutlined />}>
+                            <Menu.Item key="2" icon={<UserOutlined />}
+                            onClick={this.handleProfileClick}>
                                 Profile
                             </Menu.Item>
                             <Menu.Item key="3" icon={<SettingFilled/>}>
@@ -57,29 +78,30 @@ export default class Home extends Component {
                                         </Col>
                                         <Col span={22}>
                                         <TextArea showCount maxLength={140} onChange={onChange} 
-                                    bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 4 }}/> 
+                                    bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
+                                    style={{marginLeft: '20px'}}/> 
                                         </Col>
                                     </Row>
                                      
                                 </div>
-                
                                 <div className = "statusButtons">
                                 {/*Upload Image Button*/}
                                 <Row>
                                     <Col span={12}>
                                         <Upload>
-                                            <Button icon={<FileImageOutlined />}></Button>
+                                            <Button icon={<FileImageOutlined />} style={{backgroundColor:"yellow"}}></Button>
                                         </Upload>
                                     </Col>
                                     <Col span={12}>
-                                    <Button style={{backgroundColor:"yellow", borderRadius:"10px"}} > Buzz </Button>
+                                    <Button style={{backgroundColor:"yellow", borderRadius:"10px"}}
+                                    onClick={this.loadPosts(1)}> Buzz </Button>
                                     </Col>
                                 </Row>
                                 </div>
                             </div>
                         </Col>
                     </Row>
-                    
+                
 
 
                     </Content>

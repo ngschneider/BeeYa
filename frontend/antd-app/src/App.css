@@ -11,7 +11,7 @@
   position: absolute;
 }
 /* 
-general 
+landing page
 -------
 */
 .landingTitle
@@ -103,7 +103,7 @@ p {
   font-weight: bold;
   position:relative;
   height: 225px;
-  width: 500px;
+  width: 600px;
   padding-top: 15px;
   display:block;
 }
@@ -115,9 +115,11 @@ p {
 
 .statusTextArea {
   font-size: inherit;
+
 }
 .statusButtons {
-text-align: center;
+  text-align: center;
+  position: static;
 }
 .centerFeed {
   border: 1px solid grey;
@@ -126,4 +128,53 @@ text-align: center;
   width: fit-content;
   display: block;
   margin-left: 200px;
+}
+
+/*
+Profile
+*/
+
+.profile_page_center {
+  width: 600px;
+  margin-left: 200px;
+}
+
+.profilePost {
+  border: 1px solid grey;
+  margin-bottom: 1px;
+  margin-top: 1px;
+  display:block;
+}
+.profilePost p {
+  display:block;
+  font-size: larger;
+}
+
+.profile_header {
+  border: 1px solid grey;
+  margin-bottom: -20px;
+}
+
+.profile_following {
+  display:block;
+  font-size: medium;
+  text-align: center;
+}
+
+.profile_header_username {
+  font-weight: bold;
+  text-align:center;
+  font-size: 40px;
+  margin-bottom: 0%;
+}
+.profile_header_buzzes {
+  text-align: center;
+  margin-top: -5%;
+  font-size: 20px;
+}
+
+.profile_MyTweets_Header{
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 1px;
 }

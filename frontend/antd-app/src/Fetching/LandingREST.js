@@ -1,5 +1,5 @@
 import FetchServer from "./FetchServer";
-
+import axios from 'axios'
 export const login = (DATA,cb) => {
     let route = "/Login";
     let options = {
@@ -14,6 +14,9 @@ export const login = (DATA,cb) => {
     fetch.fetchRouteServer( route, DATA, options, (response) => {
         cb(response);
     });
+
+    
+    
 
 }
 

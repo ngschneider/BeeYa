@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Layout, Row, Col} from 'antd';
 import { Image, Divider, Form, Input, Button } from 'antd';
 import {login,createAccount} from '../Fetching/LandingREST';
@@ -34,9 +34,23 @@ const layout = {
     }
   };
 
+
   
 export default class Landing extends React.Component {
-    state = {visible: false}
+
+
+    constructor(props){
+        super(props);
+        this.state = {visibleModal: false, user: null}
+    }
+
+    componentDidMount(username) {
+        this.setState({
+            user: username
+        })
+        console.log(this.state.user);
+        localStorage.setItem('user', username);
+    }
     
     /*Incomplete*/
    signUpFetch(username, displayname, email, password) {
@@ -69,8 +83,15 @@ export default class Landing extends React.Component {
             console.log(response);
 
             if(response.login) {
+                this.setState({
+                    user: JSON.stringify(username)
+                });
+                console.log(this.state.user);
+                //PersistLogin(username);
                 this.props.history.push("/Home");
             }
+
+            
         });
     }
 
@@ -97,22 +118,24 @@ export default class Landing extends React.Component {
 
     showModal = () => {
         this.setState({
-            visible: true,
+            visibleModal: true,
         });
     };
     
     handleOk = e => {
         this.setState({
-            visible: false,
+            visibleModal: false,
         });
     };
     
     handleCancel = e => {
         this.setState({
-            visible: false,
+            visibleModal: false,
         });
     };
  
+
+  
 
     render() {
         return (
@@ -189,7 +212,7 @@ export default class Landing extends React.Component {
                 wrapperCol={{span:24}}
                 onClick={this.showModal}>Create New Account </Button>
 
-                <Modal title="Create New Account" visible={this.state.visible} 
+                <Modal title="Create New Account" visibleModal={this.state.visibleModal} 
                 onOk={this.handleOk} onCancel={this.handleCancel}
                 footer={null}
                 closable="true"
