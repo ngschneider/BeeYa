@@ -3,7 +3,7 @@ import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar} f
 import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
-import {getFollowers} from '../Fetching/HomeREST'
+import {getFollowers,postTweet} from '../Fetching/HomeREST'
 import {getPosts} from '../Fetching/ProfileREST'
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -15,7 +15,12 @@ const onChange = e => {
   };
 
 export default class Home extends Component {
-    
+    constructor(){
+        super();
+        this.state = {
+            text: ''
+        };
+    }
     feedPostsFetch(uid){
         let input = {
             id:uid
@@ -24,6 +29,25 @@ export default class Home extends Component {
             console.log(response);
         });
     }
+
+    onChange = ({ target: { value } }) => {
+        console.log(value)
+        this.setState({
+             text:value
+             });
+      }
+        
+    tweet(uid, postText){
+        let input = {
+            id:uid,
+            text:postText
+        }
+        console.log("asdfasdfasdfasdfasd")
+        postTweet(input, (response) => {
+            console.log(response);
+       });
+    }
+
 
     loadPosts = (id) => {
        this.feedPostsFetch(1);
@@ -74,12 +98,12 @@ export default class Home extends Component {
                                 <div className = "statusTextArea">
                                     <Row>
                                         <Col span={2}>
-                                        <Avatar style={{ backgroundColor: 'black', verticalAlign: 'middle', marginLeft: '4px'}} size="large"/>
+                                            <Avatar style={{ backgroundColor: 'black', verticalAlign: 'middle', marginLeft: '4px'}} size="large"/>
                                         </Col>
                                         <Col span={22}>
-                                        <TextArea showCount maxLength={140} onChange={onChange} 
-                                    bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
-                                    style={{marginLeft: '20px'}}/> 
+                                            <TextArea showCount maxLength={140} onChange={this.onChange} 
+                                                bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
+                                                style={{marginLeft: '20px'}}/> 
                                         </Col>
                                     </Row>
                                      
@@ -94,7 +118,8 @@ export default class Home extends Component {
                                     </Col>
                                     <Col span={12}>
                                     <Button style={{backgroundColor:"yellow", borderRadius:"10px"}}
-                                    onClick={this.loadPosts(1)}> Buzz </Button>
+                                    onClick={() => this.tweet(1,this.state.text)}
+                                     > Buzz </Button>
                                     </Col>
                                 </Row>
                                 </div>
