@@ -3,7 +3,7 @@ import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar} f
 import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
-import {getFollowers,postTweet} from '../Fetching/HomeREST'
+import {getFollowers,postTweet,getID} from '../Fetching/HomeREST'
 import {getPosts} from '../Fetching/ProfileREST'
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -18,7 +18,9 @@ export default class Home extends Component {
     constructor(){
         super();
         this.state = {
-            text: ''
+            text: '',
+            username: "",
+            userid:-1
         };
     }
     feedPostsFetch(uid){
@@ -29,6 +31,19 @@ export default class Home extends Component {
             console.log(response);
         });
     }
+    
+    getUserId(usrname){
+        let input = {
+            username:usrname
+        }
+        getID(input, (response) => {
+            this.setState({
+                userid:response.id
+            });
+        })
+
+        }
+    
 
     onChange = ({ target: { value } }) => {
         console.log(value)
@@ -58,6 +73,12 @@ export default class Home extends Component {
     handleProfileClick = () =>{
         this.props.history.push("/Profile");
         
+    }
+    componentDidMount(){
+        this.getUserId(this.props.location.state.username);
+        this.setState({
+            username:this.props.location.state.username
+        });
     }
     render() {
         return (
@@ -93,7 +114,7 @@ export default class Home extends Component {
                     <Row>
                         <Col span={12}>
                             <div className = "status">
-                                <h1>Home</h1>
+                                <h1>{this.state.username+"'s "} Home </h1>
                                 <Divider style={{borderWidth: "1px", borderColor: "grey"}}></Divider>
                                 <div className = "statusTextArea">
                                     <Row>
@@ -118,7 +139,7 @@ export default class Home extends Component {
                                     </Col>
                                     <Col span={12}>
                                     <Button style={{backgroundColor:"yellow", borderRadius:"10px"}}
-                                    onClick={() => this.tweet(1,this.state.text)}
+                                    onClick={() => this.tweet(this.state.userid,this.state.text)}
                                      > Buzz </Button>
                                     </Col>
                                 </Row>

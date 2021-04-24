@@ -88,7 +88,12 @@ export default class Landing extends React.Component {
                 });
                 console.log(this.state.user);
                 //PersistLogin(username);
-                this.props.history.push("/Home");
+                this.props.history.push({
+                    pathname:"/Home",
+                    state:{
+                        username:username
+                    }
+                });
             }
 
             
