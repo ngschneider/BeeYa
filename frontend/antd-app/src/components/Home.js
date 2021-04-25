@@ -16,14 +16,12 @@ const onChange = e => {
 
 export default class Home extends Component {
   
-    constructor(props){
+    constructor(){
         super();
         this.state = {
             text: '',
             username: "",
-            userid:-1,
-            logOutModalVisible: false,
-            redirect: false
+            userid:-1
         };
     }
     feedPostsFetch(uid){
@@ -83,6 +81,17 @@ export default class Home extends Component {
         });
     }
 
+    handleSettingsClick = () =>{
+        this.props.history.push("/Setting");
+        this.props.history.push({
+            pathname:"/Setting",
+            state:{
+                username:this.state.username,
+                userid:this.state.userid
+            }
+        });
+    }
+
 
    
 
@@ -131,7 +140,8 @@ export default class Home extends Component {
                             onClick={this.handleProfileClick}>
                                 Profile
                             </Menu.Item>
-                            <Menu.Item key="3" icon={<SettingFilled/>}>
+                            <Menu.Item key="3" icon={<SettingFilled/>}
+                            onClick={this.handleSettingsClick}>
                                 Settings
                             </Menu.Item>
                             {/*Log Out PopConfirm*/}

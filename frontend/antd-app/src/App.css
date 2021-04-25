@@ -178,11 +178,10 @@ Profile
   margin-bottom: 1px;
 }
 
-/*Sider*/
-.Logout {
-  font-size: small;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  text-shadow: 0px 0px 12px black;
+/*Settings*/
+
+.settingsMenu{
+  width: 600px;
+  border: 1px solid grey;
+  margin-left: 200px;
 }

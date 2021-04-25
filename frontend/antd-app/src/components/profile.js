@@ -105,6 +105,17 @@ export default class Profile extends Component {
         });
     }
 
+    handleSettingsClick = () =>{
+        this.props.history.push("/Setting");
+        this.props.history.push({
+            pathname:"/Setting",
+            state:{
+                username:this.state.username,
+                userid:this.state.userid
+            }
+        });
+    }
+
     logoutConfirm = (e) => {
         console.log(e);
         message.success('You have been logged out.');
@@ -150,7 +161,8 @@ export default class Profile extends Component {
                             <Menu.Item key="2" icon={<UserOutlined />}>
                                 Profile
                             </Menu.Item>
-                            <Menu.Item key="3" icon={<SettingFilled/>}>
+                            <Menu.Item key="3" icon={<SettingFilled/>}
+                            onClick={this.handleSettingsClick}>
                                 Settings
                             </Menu.Item>
                              {/*Log Out PopConfirm*/}
