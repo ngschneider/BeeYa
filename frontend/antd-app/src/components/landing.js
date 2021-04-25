@@ -149,11 +149,11 @@ export default class Landing extends React.Component {
 
     render() {
         return (
-            <Layout classname="Landing">
+            <Layout className="Landing">
             {/*background img*/}
             <Content>
             <div name="Content">
-                <div className="Background" class="landingBackground" >
+                <div className="landingBackground" >
                     <Image
                         src="https://images.pexels.com/photos/1322185/pexels-photo-1322185.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                         preview = {false}
@@ -298,7 +298,7 @@ export default class Landing extends React.Component {
                 </div>
             </div>
             </Content>
-            <div class = "footer">
+            <div className = "footer">
                 <Footer style={{textAlign: 'right', 
                             position: 'relative',
                             left: 0,

@@ -1,5 +1,4 @@
 import { Statistic, Row, Col, Button, Popover, Menu, Layout} from 'antd';
-import {BrowserRouter} from 'react-router-dom';
 import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
 import React, { Component } from 'react';
 
@@ -77,7 +76,7 @@ export default class Profile extends Component {
         console.log(content)
         return content;
     } 
-    createContentMyTweets = ()  => {
+    createContentMyTweets = () => {
         const content =  
         <div>
             {this.state.myPosts.map( (element, index) => {
@@ -114,7 +113,7 @@ export default class Profile extends Component {
         return (
 
             <div>
-            <Layout>
+                <Layout>
                 <div className = "homeSider">
                     <Sider style={{
                         overflow: 'auto',
@@ -179,8 +178,7 @@ export default class Profile extends Component {
                             </Popover>
                             </center>
 
-                            <div className="profile_MyTweets_Header">{"My Tweets"}
-                            </div>
+                            <div className="profile_MyTweets_Header"> {"My Tweets"}  </div>
                         </div>
                         <br/>
 
@@ -188,10 +186,10 @@ export default class Profile extends Component {
                             <Col span={24}>
                                 {myTweets}
                             </Col>
-                        </Row>  
+                    </Row>  
                     </div>
                 </Content>
-            </Layout>  
+            </Layout>
             </div>
             );
     }
