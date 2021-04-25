@@ -156,12 +156,6 @@ export default class Home extends Component {
                                             <a href="#">Log Out</a>
                                     </Popconfirm>
                             </Menu.Item>
-
-                            
-                           
-                         
-
-                         
                             
                         </Menu>
 
