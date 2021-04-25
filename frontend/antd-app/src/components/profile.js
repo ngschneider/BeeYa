@@ -1,5 +1,7 @@
-import { Statistic, Row, Col, Button, Popover, Menu, Layout} from 'antd';
-import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
+
+import { Statistic, Row, Col, Button, Popover, Menu, Layout, message, Popconfirm} from 'antd';
+import {BrowserRouter} from 'react-router-dom';
+import {HomeOutlined, SettingFilled, UserOutlined, LogoutOutlined} from '@ant-design/icons';
 import React, { Component } from 'react';
 
 import {getFollowers,getPosts} from '../Fetching/ProfileREST'
@@ -104,6 +106,35 @@ export default class Profile extends Component {
         });
     }
 
+    handleSettingsClick = () =>{
+        this.props.history.push("/Setting");
+        this.props.history.push({
+            pathname:"/Setting",
+            state:{
+                username:this.state.username,
+                userid:this.state.userid
+            }
+        });
+    }
+
+    logoutConfirm = (e) => {
+        console.log(e);
+        message.success('You have been logged out.');
+
+        this.props.history.push({
+            pathname:"/",
+            state:{
+                username:null,
+                userid:null
+            }
+        });  
+      }
+      
+      logoutCancel(e) {
+        console.log(e);
+        message.error('Log Out Cancelled');
+      }
+
     render() {
         
         const following = this.createContentFollowing();
@@ -131,8 +162,21 @@ export default class Profile extends Component {
                             <Menu.Item key="2" icon={<UserOutlined />}>
                                 Profile
                             </Menu.Item>
-                            <Menu.Item key="3" icon={<SettingFilled/>}>
+                            <Menu.Item key="3" icon={<SettingFilled/>}
+                            onClick={this.handleSettingsClick}>
                                 Settings
+                            </Menu.Item>
+                             {/*Log Out PopConfirm*/}
+                             <Menu.Item key="4" icon={<LogoutOutlined/>}>
+                                    <Popconfirm
+                                            title="Are you sure you would like to log out?"
+                                            onConfirm={this.logoutConfirm}
+                                            onCancel={this.logoutCancel}
+                                            okText="Log Out"
+                                            cancelText="Cancel"
+                                        >
+                                            <a href="#">Log Out</a>
+                                    </Popconfirm>
                             </Menu.Item>
                             
                         </Menu>

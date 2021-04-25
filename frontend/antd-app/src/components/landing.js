@@ -126,10 +126,11 @@ export default class Landing extends React.Component {
         this.signUpFetch(user, disp, email, pass);
     }   
 
-    showModal = () => {
+    showModal = e => {
         this.setState({
             visibleModal: true,
         });
+        console.log("Modal Shown.")
     };
     
     handleOk = e => {
@@ -220,9 +221,9 @@ export default class Landing extends React.Component {
                 <Button type="primary" htmlType="button" size={"large"} 
                 style={{paddingInline:"50px", backgroundColor:"rebeccapurple", borderColor:"rebeccapurple"}}
                 wrapperCol={{span:24}}
-                onClick={this.showModal}>Create New Account </Button>
+                onClick={this.showModal}>Create New Account</Button>
 
-                <Modal title="Create New Account" visibleModal={this.state.visibleModal} 
+                <Modal title="Create New Account" visible={this.state.visibleModal} 
                 onOk={this.handleOk} onCancel={this.handleCancel}
                 footer={null}
                 closable="true"
@@ -300,7 +301,7 @@ export default class Landing extends React.Component {
             </Content>
             <div className = "footer">
                 <Footer style={{textAlign: 'right', 
-                            position: 'relative',
+                            position: 'absolute',
                             left: 0,
                             bottom: 0,
                             width: '100%',
