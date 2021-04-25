@@ -300,7 +300,7 @@ export default class Landing extends React.Component {
             </Content>
             <div class = "footer">
                 <Footer style={{textAlign: 'right', 
-                            position: 'relative',
+                            position: 'absolute',
                             left: 0,
                             bottom: 0,
                             width: '100%',

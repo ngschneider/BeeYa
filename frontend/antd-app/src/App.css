@@ -92,7 +92,6 @@ p {
 
 /*Home.js*/
 .homeSider {
-  font-size: 100px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   text-shadow: 0px 0px 12px black;
@@ -177,4 +176,13 @@ Profile
   text-align: center;
   font-size: 20px;
   margin-bottom: 1px;
+}
+
+/*Sider*/
+.Logout {
+  font-size: small;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-shadow: 0px 0px 12px black;
 }

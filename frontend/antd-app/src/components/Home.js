@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar} from 'antd';
-import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined} from '@ant-design/icons';
+import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar, Popconfirm} from 'antd';
+import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
 import {getFollowers,postTweet,getID} from '../Fetching/HomeREST'
@@ -15,12 +15,15 @@ const onChange = e => {
   };
 
 export default class Home extends Component {
-    constructor(){
+  
+    constructor(props){
         super();
         this.state = {
             text: '',
             username: "",
-            userid:-1
+            userid:-1,
+            logOutModalVisible: false,
+            redirect: false
         };
     }
     feedPostsFetch(uid){
@@ -79,6 +82,29 @@ export default class Home extends Component {
             }
         });
     }
+
+
+   
+
+    logoutConfirm = (e) => {
+        console.log(e);
+        message.success('You have been logged out.');
+
+        this.props.history.push({
+            pathname:"/",
+            state:{
+                username:null,
+                userid:null
+            }
+        });  
+      }
+      
+      logoutCancel(e) {
+        console.log(e);
+        message.error('Log Out Cancelled');
+      }
+
+
     componentDidMount(){
         this.getUserId(this.props.location.state.username);
         this.setState({
@@ -91,13 +117,13 @@ export default class Home extends Component {
                     <div className = "homeSider">
                     <Sider style={{
                         overflow: 'auto',
-                        width: '400vw',
+                        width: '200vw',
                         height: '100vh',
                         position: 'fixed',
                         left: 0,
                     }}>
                         {/*Sidebar Menu*/}
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{width:"400px", minWidth:"400px"}}>
+                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{width:"200px", minWidth:"200px"}}>
                             <Menu.Item key="1" icon={<HomeOutlined />}>
                                 Home
                             </Menu.Item>
@@ -108,11 +134,31 @@ export default class Home extends Component {
                             <Menu.Item key="3" icon={<SettingFilled/>}>
                                 Settings
                             </Menu.Item>
+                            {/*Log Out PopConfirm*/}
+                            <Menu.Item key="4" icon={<LogoutOutlined/>}>
+                                    <Popconfirm
+                                            title="Are you sure you would like to log out?"
+                                            onConfirm={this.logoutConfirm}
+                                            onCancel={this.logoutCancel}
+                                            okText="Log Out"
+                                            cancelText="Cancel"
+                                        >
+                                            <a href="#">Log Out</a>
+                                    </Popconfirm>
+                            </Menu.Item>
+
+                            
+                           
+                         
+
+                         
                             
                         </Menu>
 
+                       
                     </Sider>
                     </div>
+                    
 
                     <div className="centerFeed">
                     <Content style={{overflow: 'initial'}}>
@@ -153,8 +199,6 @@ export default class Home extends Component {
                         </Col>
                     </Row>
                 
-
-
                     </Content>
                     </div>
                 </Layout>
