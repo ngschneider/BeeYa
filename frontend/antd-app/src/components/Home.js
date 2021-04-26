@@ -61,6 +61,11 @@ export default class Home extends Component {
         postTweet(input, (response) => {
             console.log(response);
        });
+
+       this.setState({
+           text:""
+       });
+
     }
 
 
@@ -187,38 +192,44 @@ export default class Home extends Component {
                                 <h1>{this.state.username+"'s "} Home </h1>
                                 <Divider style={{borderWidth: "1px", borderColor: "grey"}}></Divider>
                                 <div className = "statusTextArea">
+                                    
                                     <Row>
                                         <Col span={2}>
                                             <Avatar style={{ backgroundColor: 'black', verticalAlign: 'middle', marginLeft: '4px'}} size="large"/>
                                         </Col>
                                         <Col span={22}>
-                                            <Form.Item>
-                                            <TextArea showCount maxLength={140} onChange={this.onChange} 
-                                                bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
+                                            <Input.TextArea value={this.state.text} showCount maxLength={140} minLength={1} onChange={this.onChange}
+                                                bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} 
+                                                size="small"
                                                 style={{marginLeft: '20px'}}/> 
-                                            </Form.Item>
+                                            <Divider style={{marginTop:"1px", marginBottom:"2px", borderWidth:"0.2px", backgroundColor:'grey'}}></Divider>
                                         </Col>
                                     </Row>
-                                     
+                                    
+                                    <Row>
+                                    {/*Upload Image Button*/}
+                                        <Col span={16} offset={2}>
+                                            <Upload
+                                            action={"http://localhost:444/img"}
+                                            maxCount={1}>
+                                                <Button icon={<FileImageOutlined/>} style={{backgroundColor:"#1890ff", borderWidth:"0px", 
+                                                borderRadius:"10px"}}></Button>
+                                            </Upload>
+                                        </Col>
+                                        
+
+                                        <Col span={6}>
+                                                <div className = "tweetButton">
+                                                <Button type="primary" style={{borderRadius:"10px",
+                                                marginLeft:"85px", borderWidth:"0px", fontWeight:"bold"}}
+                                                onClick={() => this.tweet(this.state.userid,this.state.text)}
+                                                > Buzz </Button>
+                                                </div>
+                                        </Col>
+                                    </Row>
+                                    
                                 </div>
-                                <div className = "statusButtons">
-                                {/*Upload Image Button*/}
-                                <Row>
-                                    <Col span={12}>
-                                        <Upload
-                                          action={"http://localhost:444/img"}>
-                                            <Button icon={<FileImageOutlined />} style={{backgroundColor:"yellow"}}></Button>
-                                        </Upload>
-                                    </Col>
-                                    <Col span={12}>
-                                    <Form.Item>
-                                    <Button type="reset" style={{backgroundColor:"yellow", borderRadius:"10px"}}
-                                    onClick={() => this.tweet(this.state.userid,this.state.text)}
-                                     > Buzz </Button>
-                                     </Form.Item>
-                                    </Col>
-                                </Row>
-                                </div>
+                                
 
                             </div>
                         </Col>
