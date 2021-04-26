@@ -136,12 +136,13 @@ Profile
 .profile_page_center {
   width: 600px;
   margin-left: 200px;
+  border: 1px solid grey;
+  border-top: hidden;
 }
 
 .profilePost {
-  border: 1px solid grey;
-  margin-bottom: 1px;
-  margin-top: 1px;
+  border-top: 1px solid grey;
+  margin-top: 5px;
   display:block;
 }
 .profilePost p {
@@ -150,7 +151,6 @@ Profile
 }
 
 .profile_header {
-  border: 1px solid grey;
   margin-bottom: -20px;
 }
 
@@ -184,4 +184,31 @@ Profile
   width: 600px;
   border: 1px solid grey;
   margin-left: 200px;
+}
+
+
+/*Explore*/
+.explore_page_center{
+  width: 600px;
+  margin-left: 200px;
+  border: 1px solid grey;
+}
+
+.explore_page_header{
+  position: static;
+}
+
+.explore_page_header_search {
+  display:block;
+  margin-top: 30px;
+}
+
+.explore_page_header_text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.explore_post{
+  border-top: 1px solid grey;
+  display:block;
 }

@@ -1,7 +1,7 @@
 
 import { Statistic, Row, Col, Button, Popover, Menu, Layout, message, Popconfirm} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
-import {HomeOutlined, SettingFilled, UserOutlined, LogoutOutlined} from '@ant-design/icons';
+import {HomeOutlined, SettingFilled, UserOutlined, LogoutOutlined, CompassOutlined} from '@ant-design/icons';
 import React, { Component } from 'react';
 
 import {getFollowers,getPosts} from '../Fetching/ProfileREST'
@@ -14,7 +14,7 @@ export default class Profile extends Component {
         super();
         this.state = {
             username:"",
-            userId:-1,
+            userid:-1,
             followerCount:0,
             followingCount:0,
             followers: [],
@@ -26,16 +26,16 @@ export default class Profile extends Component {
     componentDidMount(){
         this.setState({
             username:this.props.location.state.username,
-            userId:this.props.location.state.userid
+            userid:this.props.location.state.userid
         });
         this.followerFetch(this.props.location.state.userid);
         this.myPostFetch(this.props.location.state.userid);
     }
 
-    followerFetch = (userId) => {
+    followerFetch = (userid) => {
 
         let input = {
-            id : userId
+            id : userid
         }
 
         getFollowers(input, (response) => {
@@ -51,10 +51,10 @@ export default class Profile extends Component {
         
     }
 
-    myPostFetch = (userId) => {
+    myPostFetch = (userid) => {
 
         let input = {
-            id : userId
+            id : userid
         }
 
         getPosts(input, (response) => {
@@ -66,6 +66,13 @@ export default class Profile extends Component {
         });
         
     }
+
+    sortMyPosts = () =>{
+        const myPostsSorted = [].concat(this.state.myPosts)
+        .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
+        this.state.myPosts = [].concat(myPostsSorted)
+    }
+
     createContentFollowing = ()  => {
         const content =  (
         <div>
@@ -79,6 +86,7 @@ export default class Profile extends Component {
         return content;
     } 
     createContentMyTweets = () => {
+        this.sortMyPosts();
         const content =  
         <div>
             {this.state.myPosts.map( (element, index) => {
@@ -106,6 +114,17 @@ export default class Profile extends Component {
             }
         });
     }
+
+    handleExploreClick = () =>{
+        this.props.history.push({
+            pathname:"/Explore",
+            state:{
+                username:this.state.username,
+                userid: this.state.userid
+            }
+        });
+}
+
 
     handleSettingsClick = () =>{
         this.props.history.push("/Setting");
@@ -155,20 +174,24 @@ export default class Profile extends Component {
                         left: 0,
                     }}>
                         {/*Sidebar Menu*/}
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} style={{width:"400px", minWidth:"400px"}}>
+                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} style={{width:"400px", minWidth:"400px"}}>
                             <Menu.Item key="1" icon={<HomeOutlined />} 
                             onClick={this.handleHomeClick}>
                                 Home
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<UserOutlined />}>
+                            <Menu.Item key="2" icon={<CompassOutlined />} 
+                            onClick={this.handleExploreClick}>
+                                Explore
+                            </Menu.Item>
+                            <Menu.Item key="3" icon={<UserOutlined />}>
                                 Profile
                             </Menu.Item>
-                            <Menu.Item key="3" icon={<SettingFilled/>}
+                            <Menu.Item key="4" icon={<SettingFilled/>}
                             onClick={this.handleSettingsClick}>
                                 Settings
                             </Menu.Item>
                              {/*Log Out PopConfirm*/}
-                             <Menu.Item key="4" icon={<LogoutOutlined/>}>
+                             <Menu.Item key="5" icon={<LogoutOutlined/>}>
                                     <Popconfirm
                                             title="Are you sure you would like to log out?"
                                             onConfirm={this.logoutConfirm}

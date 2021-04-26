@@ -55,8 +55,33 @@ const ErrorRecovery = require("./errorRecovery");
 	
 	}
 
+	const selectOrder = (tableName, column, value, order) => {
+		let selectStatement = `SELECT * FROM ${tableName} WHERE ${column}=\'${value}\'`;
+		if (order) {
+			selectStatement += ` ORDER BY ${order};`;
+		}
+		else {
+			selectStatement += `;`;
+		}
+		return selectStatement;
+	
+	}
+
 	const selectColumn = (tableName, column, value, getColumn) => {
 		let selectStatement = `SELECT ${getColumn} FROM ${tableName} WHERE ${column}=\'${value}\';`;
+		
+		return selectStatement;
+	
+	}
+
+	const selectAllExcept = (tableName, column, value, order) => {
+		let selectStatement = `SELECT * FROM ${tableName} WHERE ${column}<>\'${value}\'`;
+		if (order) {
+			selectStatement += ` ORDER BY ${order};`;
+		}
+		else {
+			selectStatement += `;`;
+		}
 		
 		return selectStatement;
 	
@@ -92,3 +117,4 @@ exports.select = select;
 exports.selectColumn = selectColumn;
 exports.update = update;
 exports.count = count;
+exports.selectAllExcept = selectAllExcept;

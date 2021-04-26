@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar, Popconfirm} from 'antd';
-import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined} from '@ant-design/icons';
+import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined, CompassOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
 import {getFollowers,postTweet,getID} from '../Fetching/HomeREST'
@@ -92,6 +92,16 @@ export default class Home extends Component {
         });
     }
 
+    handleExploreClick = () =>{
+            this.props.history.push({
+                pathname:"/Explore",
+                state:{
+                    username:this.state.username,
+                    userid: this.state.userid
+                }
+            });
+    }
+
 
    
 
@@ -136,16 +146,20 @@ export default class Home extends Component {
                             <Menu.Item key="1" icon={<HomeOutlined />}>
                                 Home
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<UserOutlined />}
+                            <Menu.Item key="2" icon={<CompassOutlined />}
+                            onClick={this.handleExploreClick}>
+                                Explore
+                            </Menu.Item>
+                            <Menu.Item key="3" icon={<UserOutlined />}
                             onClick={this.handleProfileClick}>
                                 Profile
                             </Menu.Item>
-                            <Menu.Item key="3" icon={<SettingFilled/>}
+                            <Menu.Item key="4" icon={<SettingFilled/>}
                             onClick={this.handleSettingsClick}>
                                 Settings
                             </Menu.Item>
                             {/*Log Out PopConfirm*/}
-                            <Menu.Item key="4" icon={<LogoutOutlined/>}>
+                            <Menu.Item key="5" icon={<LogoutOutlined/>}>
                                     <Popconfirm
                                             title="Are you sure you would like to log out?"
                                             onConfirm={this.logoutConfirm}
@@ -169,6 +183,7 @@ export default class Home extends Component {
                     <Row>
                         <Col span={12}>
                             <div className = "status">
+                                
                                 <h1>{this.state.username+"'s "} Home </h1>
                                 <Divider style={{borderWidth: "1px", borderColor: "grey"}}></Divider>
                                 <div className = "statusTextArea">
@@ -177,9 +192,11 @@ export default class Home extends Component {
                                             <Avatar style={{ backgroundColor: 'black', verticalAlign: 'middle', marginLeft: '4px'}} size="large"/>
                                         </Col>
                                         <Col span={22}>
+                                            <Form.Item>
                                             <TextArea showCount maxLength={140} onChange={this.onChange} 
                                                 bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
                                                 style={{marginLeft: '20px'}}/> 
+                                            </Form.Item>
                                         </Col>
                                     </Row>
                                      
@@ -194,12 +211,15 @@ export default class Home extends Component {
                                         </Upload>
                                     </Col>
                                     <Col span={12}>
-                                    <Button style={{backgroundColor:"yellow", borderRadius:"10px"}}
+                                    <Form.Item>
+                                    <Button type="reset" style={{backgroundColor:"yellow", borderRadius:"10px"}}
                                     onClick={() => this.tweet(this.state.userid,this.state.text)}
                                      > Buzz </Button>
+                                     </Form.Item>
                                     </Col>
                                 </Row>
                                 </div>
+
                             </div>
                         </Col>
                     </Row>

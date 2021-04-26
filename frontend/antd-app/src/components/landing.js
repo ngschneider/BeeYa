@@ -49,6 +49,7 @@ export default class Landing extends React.Component {
             user: username
         })
         console.log(this.state.user);
+        console.log("khan");
         localStorage.setItem('user', username);
     }
     

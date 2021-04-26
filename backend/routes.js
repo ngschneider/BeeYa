@@ -5,6 +5,7 @@ const post = require("./route/Post.js");
 const user = require("./Route/User.js");
 const login = require("./route/Login.js");
 const UserInformation = require("./Route/UserInformation.js");
+const explore = require("./Route/ExploreRoute");
 
 let currentImg = {
 	imgname:null
@@ -102,6 +103,14 @@ router.post("/Reply:input", (req,res) =>	{
 		res.send(response);
 	});
 	
+});
+
+//Get all global posts NOT from User
+router.get("/Explore:input", (req, res) => {
+	let input = JSON.parse(req.params.input);
+	explore.getAllExplorePosts(input.user_id, (response) => {
+		res.send(response);
+	});
 });
 
 function getDate() {

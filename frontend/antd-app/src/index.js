@@ -7,8 +7,9 @@ import reportWebVitals from './reportWebVitals';
 import Landing from './components/landing';
 import Home from './components/Home';
 import { createBrowserHistory } from "history";
-import Profile from './components/Profile';
+import Profile from './components/profile';
 import Setting from './components/Setting';
+import Explore from './components/Explore';
 
 export const appHistory = createBrowserHistory();
 
@@ -17,6 +18,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={ Landing }/>
       <Route exact path="/Home" component={Home}/>
+      <Route exact path="/Explore" component={Explore}/>
       <Route exact path="/Profile" component={Profile}/>
       <Route exact path="/Setting" component={Setting}/>
     </Switch>

@@ -1,7 +1,7 @@
 import  React, {Component} from "react";
 
 import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar, Popconfirm, message} from 'antd';
-import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined} from '@ant-design/icons';
+import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined, CompassOutlined} from '@ant-design/icons';
 
 
 const {Content, Sider} = Layout;
@@ -70,20 +70,23 @@ export default class Setting extends Component{
                     left: 0,
                 }}>
                     {/*Sidebar Menu*/}
-                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']} style={{width:"200px", minWidth:"200px"}}>
+                    <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']} style={{width:"200px", minWidth:"200px"}}>
                         <Menu.Item key="1" icon={<HomeOutlined />}
                         onClick={this.handleHomeClick}>
                             Home
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<UserOutlined />}
+                        <Menu.Item key="2" icon={<CompassOutlined />}>
+                            Explore
+                        </Menu.Item>
+                        <Menu.Item key="3" icon={<UserOutlined />}
                         onClick={this.handleProfileClick}>
                             Profile
                         </Menu.Item>
-                        <Menu.Item key="3" icon={<SettingFilled/>}>
+                        <Menu.Item key="4" icon={<SettingFilled/>}>
                             Settings
                         </Menu.Item>
                         {/*Log Out PopConfirm*/}
-                        <Menu.Item key="4" icon={<LogoutOutlined/>}>
+                        <Menu.Item key="5" icon={<LogoutOutlined/>}>
                                 <Popconfirm
                                         title="Are you sure you would like to log out?"
                                         onConfirm={this.logoutConfirm}

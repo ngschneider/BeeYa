@@ -8,7 +8,8 @@ var con = mysql.createConnection(
                 password: "beeya123",
                 database: "beeyaDB",
                 stringifyObjects: "true",
-		multipleStatements: "true"
+		multipleStatements: "true",
+		connectionLimit: 100
         }
 
 );
