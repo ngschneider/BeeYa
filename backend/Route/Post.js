@@ -1,8 +1,17 @@
 const sqlCommand = require("../database/sqlCommand.js")
+const upload = require("../database/googleDrive");
 
-createPost = (userid, text, date, callback) => {
-    let tableRow = ["posttext", "created_at", "user_id"];
-    let tableColumn = [text, date, userid];
+const uploadImg = (fileData,filename) => {
+	upload.upload(fileData,filename);
+}
+
+const deleteImgList = (fileList) => {
+	upload.deleteFileList(fileList);
+}
+
+createPost = (userid, text, date, imgName, callback) => {
+    let tableRow = ["posttext", "created_at", "user_id", "img_id"];
+    let tableColumn = [text, date, userid,imgName.imgname];
 	let statement = sqlCommand.insert("Posts", tableRow, tableColumn );
 	sqlCommand.send([statement], (result) => {
 		if(result.errnum == 1){
@@ -12,6 +21,7 @@ createPost = (userid, text, date, callback) => {
 		}
 	});
 }
+
 
 createReply = (userid,replyToID ,text, date, callback) => {
     let tableRow = ["posttext", "created_at", "user_id", "in_reply_to_postid"];
@@ -77,4 +87,6 @@ exports.setLike = setLike;
 exports.setRetweet = setRetweet;
 exports.getPost = getPost;
 exports.createReply = createReply;
+exports.uploadImg = uploadImg;
+exports.deleteImgList = deleteImgList;
 

@@ -85,7 +85,8 @@ export default class Profile extends Component {
                 if(element.in_reply_to_postid === null){
                     return (
                     <div className="profilePost">
-                        <Tweet postText={element.posttext} likes={element.likes_count} rebuzz={element.rebuzz_count}/>
+
+                        <Tweet postText={element.posttext} likes={element.likes_count} img={element.img_id} rebuzz={element.rebuzz_count}/>
                     </div>)
                 }else{
 

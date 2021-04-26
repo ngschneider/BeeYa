@@ -188,7 +188,8 @@ export default class Home extends Component {
                                 {/*Upload Image Button*/}
                                 <Row>
                                     <Col span={12}>
-                                        <Upload>
+                                        <Upload
+                                          action={"http://localhost:444/img"}>
                                             <Button icon={<FileImageOutlined />} style={{backgroundColor:"yellow"}}></Button>
                                         </Upload>
                                     </Col>

@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import Landing from './components/landing';
 import Home from './components/Home';
 import { createBrowserHistory } from "history";
-import Profile from './components/profile';
+import Profile from './components/Profile';
 import Setting from './components/Setting';
 
 export const appHistory = createBrowserHistory();

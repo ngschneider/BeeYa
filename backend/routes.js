@@ -6,11 +6,16 @@ const user = require("./Route/User.js");
 const login = require("./route/Login.js");
 const UserInformation = require("./Route/UserInformation.js");
 
+let currentImg = {
+	imgname:null
+}
 
-router.get("/test:", (req,res) =>{
-	let input = JSON.parse(req.params.input);
-
-	user.getUserName()
+router.post("/img", (req,res) =>{
+	let imgid = generateUniqueId();
+	post.uploadImg(req.files.file.data,imgid);
+	currentImg.imgname = imgid;
+	console.log("IMAGE UPLOADED")
+	res.send({imgUpload:true});
 });
 router.get("/User:input", (req,res) =>	{
 	let input = JSON.parse(req.params.input);
@@ -83,9 +88,11 @@ router.get("/Post:input", (req,res) =>	{
 
 router.post("/Post:input", (req,res) =>	{
 	let input = JSON.parse(req.params.input);
-	post.createPost(input.id, input.text, getDate(), (response) => {
+	
+	post.createPost(input.id, input.text, getDate(), currentImg, (response) => {
 		res.send(response);
 	});
+	currentImg.imgname = null;
 	
 });
 
@@ -101,5 +108,9 @@ function getDate() {
 	let dateObj = new Date();
 		let date = dateObj.getFullYear() + "-" + dateObj.getMonth() + "-" + dateObj.getDate();
 		return date;
+}
+const generateUniqueId = () => {
+	return Math.floor(Math.random() * 999999999);	
+
 }
 module.exports = router;
