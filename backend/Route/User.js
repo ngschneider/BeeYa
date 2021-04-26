@@ -8,7 +8,7 @@ createUser = (username,displayname,email,pass,date,callback) => {
     sqlCommand.send([statement], (results)=> {
         console.log(results);
         if(results.errnum == 1){
-            callback({created:true});
+            callback({created:true,username:username});
         }else {
             callback({created:false});
         }
