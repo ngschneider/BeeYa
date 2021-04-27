@@ -46,6 +46,13 @@ router.get("/Following:input", (req,res) => {
 	});
 });
 
+router.get("/FeedFollowing:input", (req,res) => {
+	let input = JSON.parse(req.params.input);
+	UserInformation.getFollowing(input.id, (result) => {
+		res.send(result);	
+	});
+});
+
 router.post("/Tweet/Like:input", (req,res) => {
 	let input = JSON.parse(req.params.input);
 	post.setLike(input.postId,input.userId, (result) => {
@@ -105,6 +112,19 @@ router.post("/Reply:input", (req,res) =>	{
 	
 });
 
+router.get("/Homefeed:input", (req,res) =>	{
+	let input = JSON.parse(req.params.input);
+	UserInformation.getUserFeed(input.id, (response) => {
+		res.send(response);
+	});
+});
+
+router.get("/IDGet:input", (req,res) =>	{
+	let input = JSON.parse(req.params.input);
+	user.getUserID(input.username, (response) => {
+		res.send(response);
+	});
+});
 //Get all global posts NOT from User
 router.get("/Explore:input", (req, res) => {
 	let input = JSON.parse(req.params.input);
@@ -113,9 +133,24 @@ router.get("/Explore:input", (req, res) => {
 	});
 });
 
+router.get("/GetUsername:input", (req, res) => {
+	let input = JSON.parse(req.params.input);
+	user.getUserName(input.id, (response) => {
+		res.send(response);
+	});
+});
+
+router.get("/Search:input", (req, res) => {
+	let input = JSON.parse(req.params.input);
+	explore.searchPosts(input.posttext, (response) => {
+		res.send(response);
+	});
+});
+
 function getDate() {
 	let dateObj = new Date();
-		let date = dateObj.getFullYear() + "-" + dateObj.getMonth() + "-" + dateObj.getDate();
+		let date = dateObj.getFullYear() + "-" + (dateObj.getMonth()+1) + "-" + dateObj.getDate() + "T" 
+		+ dateObj.getHours() + ":" + dateObj.getMinutes() + ":" + dateObj.getSeconds();
 		return date;
 }
 const generateUniqueId = () => {

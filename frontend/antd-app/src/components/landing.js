@@ -3,6 +3,7 @@ import {Layout, Row, Col} from 'antd';
 import { Image, Divider, Form, Input, Button } from 'antd';
 import {login,createAccount} from '../Fetching/LandingREST';
 import Modal from 'antd/lib/modal/Modal';
+import { getID } from '../Fetching/HomeREST';
 
 const { Header, Footer, Sider, Content } = Layout;
 const layout = {
@@ -41,16 +42,14 @@ export default class Landing extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {visibleModal: false, user: null}
+        this.state = {visibleModal: false, username: null, userid: -1}
     }
 
     componentDidMount(username) {
         this.setState({
-            user: username
+            username: username
         })
-        console.log(this.state.user);
-        console.log("khan");
-        localStorage.setItem('user', username);
+        console.log(this.state.username);
     }
     
     /*Incomplete*/
@@ -64,14 +63,18 @@ export default class Landing extends React.Component {
 
        createAccount(input, (response) => {
 
-            if(response.user){
+            if(response.username){
                 console.log("Account Created")
+                this.setState({
+                    visibleModal:false
+                })
                 this.props.history.push({
                     pathname:"/Home",
                     state:{
-                        username:response.user
+                        username:response.username
                     }
                 });
+            
 
             }else {
                 console.log("Account Failed To Create")
@@ -90,16 +93,18 @@ export default class Landing extends React.Component {
 
             if(response.login) {
                 this.setState({
-                    user: JSON.stringify(username)
+                    username: username
                 });
-                console.log(this.state.user);
+                console.log(this.state.userid);
+                console.log(this.state.username);
                 //PersistLogin(username);
                 this.props.history.push({
                     pathname:"/Home",
                     state:{
-                        username:username
+                        username:this.state.username
                     }
                 });
+                
             }
 
             

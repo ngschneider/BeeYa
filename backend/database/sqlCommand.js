@@ -87,11 +87,21 @@ const ErrorRecovery = require("./errorRecovery");
 	
 	}
 
+	const search = (tableName, column, value) => {
+		let selectStatement = `SELECT * FROM ${tableName} WHERE ${column} LIKE \'%${value}%\'`;
+
+		return selectStatement;
+	}
+
 	const update = (tableName, column, value, id) => {
 		let selectStatement = `UPDATE ${tableName} SET ${column} = ${column} + \'${value}\' WHERE post_id = \'${id}\';`;
 
 		return selectStatement;
 	
+	}
+
+	const updatePostCount = (userid) =>{
+		let selectStatement = `UPDATE Users SET postsCount = postsCount + \'1\' WHERE id = \'userid\';`;
 	}
 
 	const count = (tableName, column) => {
@@ -110,6 +120,13 @@ const ErrorRecovery = require("./errorRecovery");
 		return sqlString;
 	}
 
+	const feed =(value) => {
+		let selectStatement = `SELECT Posts.* FROM FollowingTable LEFT JOIN Posts ON Posts.user_id = FollowingTable.followedUser
+		WHERE followingUser=\'${value}\' GROUP BY Posts.id;`;
+
+		return selectStatement;
+	}
+
 exports.insert = insert;
 exports.send = send;
 exports.deleteRecord = deleteRecord;
@@ -118,3 +135,6 @@ exports.selectColumn = selectColumn;
 exports.update = update;
 exports.count = count;
 exports.selectAllExcept = selectAllExcept;
+exports.search = search;
+exports.feed = feed;
+exports.updatePostCount = updatePostCount;

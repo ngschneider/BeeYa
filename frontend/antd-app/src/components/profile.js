@@ -4,7 +4,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {HomeOutlined, SettingFilled, UserOutlined, LogoutOutlined, CompassOutlined} from '@ant-design/icons';
 import React, { Component } from 'react';
 
-import {getFollowers,getPosts} from '../Fetching/ProfileREST'
+import {getFollowers,getFollowing,getPosts, getUsername} from '../Fetching/ProfileREST'
 
 import Tweet from './Tweet';
 const {Sider, Content} = Layout;
@@ -18,6 +18,7 @@ export default class Profile extends Component {
             followerCount:0,
             followingCount:0,
             followers: [],
+            following: [],
             myPosts:[]
         };
 
@@ -29,6 +30,7 @@ export default class Profile extends Component {
             userid:this.props.location.state.userid
         });
         this.followerFetch(this.props.location.state.userid);
+        this.followingFetch(this.props.location.state.userid);
         this.myPostFetch(this.props.location.state.userid);
     }
 
@@ -51,6 +53,20 @@ export default class Profile extends Component {
         
     }
 
+    followingFetch = (userid) => {
+        let input = {
+            id : userid
+        }
+
+        getFollowing(input, (response) =>{
+            if(response.following) {
+                this.setState({
+                    following: response.following,
+                    followingCount: response.following.length
+                })
+            }
+        })
+    }
     myPostFetch = (userid) => {
 
         let input = {
@@ -76,9 +92,25 @@ export default class Profile extends Component {
     createContentFollowing = ()  => {
         const content =  (
         <div>
+            {this.state.following.map( (element, index) => {
+                console.log(element.created_at);
+
+               return   <p key={index}> { "User " + element.followedUser + ", since " + element.created_at} </p>
+            })}
+        </div>
+        )
+        console.log(content)
+        return content;
+    }
+    
+    
+    createContentFollowers = ()  => {
+        const content =  (
+        <div>
             {this.state.followers.map( (element, index) => {
                 console.log(element.created_at);
-               return   <p key={index}> {  element.followedUser + ", since " + element.created_at} </p>
+
+               return   <p key={index}> { "User " + element.followingUser  + ", since " + element.created_at} </p>
             })}
         </div>
         )
@@ -156,7 +188,7 @@ export default class Profile extends Component {
       }
 
     render() {
-        
+        const followers = this.createContentFollowers();
         const following = this.createContentFollowing();
 
         const myTweets = this.createContentMyTweets();
@@ -215,35 +247,33 @@ export default class Profile extends Component {
                             {/*Swap "CurrentUsername" for reactive currentUser*/}
                             <div className="profile_header_username">{this.state.username + "'s profile" }</div>
                             <br/>
-                            <div className="profile_header_buzzes">{this.state.myPosts.length + " buzzes"}</div>
+                           
                             
                             <center>
-                            {"Following : "}
-                            <Popover placement="bottom" title={"Following"} content={following} trigger="click">
+                            {"Followers : "}
+                            <Popover placement="bottom" title={"Following"} content={followers} trigger="click">
                                 <Button type="FollowerCount" size={'large'}>
                                     {this.state.followerCount}
                                 </Button>
                             </Popover>
 
-                            {"Followers : "}
+                            {"Following : "}
                             <Popover placement="bottom" title={"Following"} content={following} trigger="click">
                                 <Button type="FollowerCount" size={'large'}>
-                                    {"TODO"}
+                                    {this.state.followingCount}
                                 </Button>
                             </Popover>
 
-                            {"Tweets:"}
+                            {"Buzzes:"}
+                            <Button type="FollowerCount" size={'large'}>
+                                {this.state.myPosts.length}
+                            </Button>
+                            {/*{"Settings:"}
                             <Popover placement="bottom" title={"Following"} content={following} trigger="click">
                                 <Button type="FollowerCount" size={'large'}>
                                     {"TODO"}
                                 </Button>
-                            </Popover>
-                            {"Settings:"}
-                            <Popover placement="bottom" title={"Following"} content={following} trigger="click">
-                                <Button type="FollowerCount" size={'large'}>
-                                    {"TODO"}
-                                </Button>
-                            </Popover>
+                </Popover>*/}
                             </center>
 
                             <div className="profile_MyTweets_Header"> {"My Tweets"}  </div>

@@ -37,7 +37,7 @@ unFollowUser = (userId,followId, callback) => {
 
 getFollowers = (userId, callback) => {
     let table = "FollowingTable";
-    let column = "followingUser";
+    let column = "followedUser";
     console.log(userId);
     let statement = sqlCommand.select(table, column, userId);
     console.log(statement);
@@ -50,6 +50,33 @@ getFollowers = (userId, callback) => {
     });
 }
 
+getFollowing = (userId, callback) => {
+    let table = "FollowingTable";
+    let column = "followingUser";
+    console.log(userId);
+    let statement = sqlCommand.select(table, column, userId);
+    console.log(statement);
+    sqlCommand.send([statement], result => {
+        console.log(result)
+        let response = {
+            following:result
+        }
+        callback(response)
+    });
+}
+
+getUserFeed = (userId, callback) => {
+    let statement = sqlCommand.feed(userId);
+    sqlCommand.send([statement], results => {
+        let response = results;
+		response.reply = [];
+		response.reply.push(results[1]);
+		callback(response);
+    })
+}
+
 exports.followUser = followUser;
 exports.getFollowers = getFollowers;
+exports.getFollowing = getFollowing;
+exports.getUserFeed = getUserFeed;
 exports.unFollowUser = unFollowUser;

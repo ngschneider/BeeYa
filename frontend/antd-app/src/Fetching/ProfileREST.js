@@ -16,6 +16,35 @@ export const getFollowers = (DATA,cb) => {
 
 }
 
+export const getFollowing = (DATA,cb) => {
+    let route = "/FeedFollowing";
+    let options = {
+        method : 'GET'
+    }
+
+    let fetch = new FetchServer();
+    console.log(JSON.stringify(DATA))
+
+    fetch.fetchRouteServer( route, DATA, options, (response) => {
+        cb(response);
+    });
+}
+
+export const getUsername = (DATA,cb) => {
+    let route ="/GetUsername";
+
+    let options ={
+        method: 'GET'
+    }
+
+    let fetch = new FetchServer();
+    console.log(JSON.stringify(DATA))
+
+    fetch.fetchRouteServer( route, DATA, options, (response) => {
+        cb(response);
+    });
+}
+
 export const getPosts = (DATA,cb) => {
     let route = "/Post";
     

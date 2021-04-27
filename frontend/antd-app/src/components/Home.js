@@ -3,11 +3,13 @@ import { Image, Divider, Form, Input, Button, Layout, Menu, Row, Col,  Avatar, P
 import {HomeOutlined, SettingFilled, UserOutlined, UploadOutlined, FileImageOutlined, LogoutOutlined, CompassOutlined} from '@ant-design/icons';
 import { Upload, message} from 'antd';
 import {BrowserRouter} from 'react-router-dom';
-import {getFollowers,postTweet,getID} from '../Fetching/HomeREST'
+import {getFollowers,postTweet,getID, getFeed} from '../Fetching/HomeREST'
 import {getPosts} from '../Fetching/ProfileREST'
+import Tweet from './Tweet'
 
 const { Header, Footer, Sider, Content } = Layout;
 const {TextArea} = Input;
+
 
 //Track text area changes in console
 const onChange = e => {
@@ -21,30 +23,46 @@ export default class Home extends Component {
         this.state = {
             text: '',
             username: "",
-            userid:-1
+            userid:-1,
+            feedPosts: []
         };
     }
     feedPostsFetch(uid){
         let input = {
-            id:uid
+            id:1
         }
-        getPosts(input, (response) => {
+        getFeed(input, (response) => {
             console.log(response);
+            this.setState({
+                feedPosts:response
+            })
         });
     }
-    
-    getUserId(usrname){
-        let input = {
-            username:usrname
-        }
-        getID(input, (response) => {
-            this.setState({
-                userid:response.id
-            });
-        })
+    sortMyPosts = () =>{
+        const feedPostsSorted = [].concat(this.state.feedPosts)
+        .sort((a, b) => a.created_at < b.created_at ? 1 : -1)
+        this.state.feedPosts = [].concat(feedPostsSorted)
+    }
 
-        }
-    
+    createContentFeedTweets = () => {
+        this.sortMyPosts();
+        const content =
+            <div>
+                {this.state.feedPosts.map( (element, index) => {
+                    if(element.in_reply_to_postid === null){
+                        return (
+                        <div className="home_post">
+                            <Tweet postText={element.posttext} likes={element.likes_count} img={element.img_id} rebuzz={element.rebuzz_count}/>
+                        </div>)
+                    }else{
+
+                    }
+                })}
+            </div>
+             //   console.log(content)
+        return content;
+       
+    }
 
     onChange = ({ target: { value } }) => {
         console.log(value)
@@ -61,11 +79,6 @@ export default class Home extends Component {
         postTweet(input, (response) => {
             console.log(response);
        });
-
-       this.setState({
-           text:""
-       });
-
     }
 
 
@@ -130,12 +143,13 @@ export default class Home extends Component {
 
 
     componentDidMount(){
-        this.getUserId(this.props.location.state.username);
         this.setState({
             username:this.props.location.state.username
         });
+        this.feedPostsFetch(1);
     }
     render() {
+        const feed = this.createContentFeedTweets();
         return (
                 <Layout>
                     <div className = "homeSider">
@@ -192,17 +206,18 @@ export default class Home extends Component {
                                 <h1>{this.state.username+"'s "} Home </h1>
                                 <Divider style={{borderWidth: "1px", borderColor: "grey"}}></Divider>
                                 <div className = "statusTextArea">
-                                    
+                                    <Form>
                                     <Row>
                                         <Col span={2}>
-                                            <Avatar style={{ backgroundColor: 'black', verticalAlign: 'middle', marginLeft: '4px'}} size="large"/>
+                                            
                                         </Col>
                                         <Col span={22}>
-                                            <Input.TextArea value={this.state.text} showCount maxLength={140} minLength={1} onChange={this.onChange}
-                                                bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} 
-                                                size="small"
+                                            <Form.Item>
+                                            <TextArea showCount maxLength={140} onChange={this.onChange} 
+                                                bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
                                                 style={{marginLeft: '20px'}}/> 
-                                            <Divider style={{marginTop:"1px", marginBottom:"2px", borderWidth:"0.2px", backgroundColor:'grey'}}></Divider>
+                                            </Form.Item>
+                                            <Divider style={{marginTop:"1px", marginBottom:"4px"}}></Divider>
                                         </Col>
                                     </Row>
                                     
@@ -210,8 +225,7 @@ export default class Home extends Component {
                                     {/*Upload Image Button*/}
                                         <Col span={16} offset={2}>
                                             <Upload
-                                            action={"http://localhost:444/img"}
-                                            maxCount={1}>
+                                            action={"http://localhost:444/img"}>
                                                 <Button icon={<FileImageOutlined/>} style={{backgroundColor:"#1890ff", borderWidth:"0px", 
                                                 borderRadius:"10px"}}></Button>
                                             </Upload>
@@ -219,22 +233,31 @@ export default class Home extends Component {
                                         
 
                                         <Col span={6}>
+                                            <Form.Item>
                                                 <div className = "tweetButton">
                                                 <Button type="primary" style={{borderRadius:"10px",
                                                 marginLeft:"85px", borderWidth:"0px", fontWeight:"bold"}}
                                                 onClick={() => this.tweet(this.state.userid,this.state.text)}
                                                 > Buzz </Button>
                                                 </div>
+                                            </Form.Item>
                                         </Col>
                                     </Row>
+                                   
                                     
+                                    </Form>
                                 </div>
                                 
 
                             </div>
                         </Col>
                     </Row>
-                
+                    
+                    <Row>
+                            <Col span={24}>
+                                {feed}
+                            </Col>
+                    </Row>  
                     </Content>
                     </div>
                 </Layout>

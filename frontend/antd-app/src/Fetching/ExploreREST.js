@@ -15,3 +15,18 @@ export const getExplorePosts = (DATA,cb) => {
     });
 
 }
+
+export const getSearchPosts = (DATA, cb) => {
+    let route = "/Search";
+    
+    let options = {
+        method : 'GET'
+    }
+
+    let fetch = new FetchServer();
+    console.log(JSON.stringify(DATA))
+
+    fetch.fetchRouteServer( route, DATA, options, (response) => {
+        cb(response);
+    });
+}

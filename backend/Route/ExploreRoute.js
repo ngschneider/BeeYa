@@ -12,5 +12,28 @@ getAllExplorePosts = (user_id, callback) => {
 	});
 }
 
+searchPosts = (searchText, callback) => {
+	let statement = sqlCommand.search("Posts", "posttext", searchText);
+
+	sqlCommand.send([statement], (results) => {
+		console.log(results);
+		if(results)
+		{
+			let response = results;
+			response.reply = [];
+			response.reply.push(results[1]);
+			callback(response);
+		}
+		else{
+			let response ={
+				result: "error"
+			}
+			callback(response);
+		}
+		
+	})
+}
+
 
 exports.getAllExplorePosts = getAllExplorePosts;
+exports.searchPosts = searchPosts;

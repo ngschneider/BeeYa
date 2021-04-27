@@ -5,16 +5,24 @@ import {HomeOutlined, SettingFilled, UserOutlined, LogoutOutlined, CompassOutlin
 import Tweet from './Tweet'
 
 import {getFollowers,getPosts} from '../Fetching/ProfileREST'
-import {getExplorePosts} from '../Fetching/ExploreREST'
+import {getExplorePosts, getSearchPosts} from '../Fetching/ExploreREST'
 const {Sider, Content} = Layout;
 const { Search } = Input;
+
+const searchFailPost = () =>{
+    return (
+    <div className="explore_post">
+        <p>Search Returned No Results!</p>
+    </div>);
+}
 export default class Explore extends Component {
     constructor(){
         super();
         this.state = {
             username:"",
             userid:-1,
-            explorePosts:[]
+            explorePosts:[],
+            headerText:""
         };
     }
 
@@ -41,11 +49,45 @@ export default class Explore extends Component {
         });
         
     }
+
+    searchPostsFetch = (query) =>{
+        let input ={
+            posttext: query
+        }
+
+
+
+        getSearchPosts(input, (response) => {
+            console.log(response)
+            if(response.error){
+                message.error('Search returned no posts');
+            }
+            else {
+                this.setState({
+                    explorePosts:response
+                });
+
+                if(query) {
+                    this.setState({
+                        headerText: "Searching For: " + query
+                    })
+                }
+                else{
+                    this.setState({
+                        headerText:"Recent Buzz"
+                    })
+                }
+            }
+            
+        })
+    }         
+    
     handleHomeClick = () => {
         this.props.history.push({
             pathname:"/Home",
             state:{
-                username:this.state.username
+                username:this.state.username,
+                userid: this.state.userid
             }
         });
     }
@@ -74,27 +116,57 @@ export default class Explore extends Component {
     
 
      createContentExploreTweets = () => {
-        const content =  
-        <div>
-            {this.state.explorePosts.map( (element, index) => {
-                if(element.in_reply_to_postid === null){
-                    return (
-                    <div className="explore_post">
+        const content =
+            <div>
+                {this.state.explorePosts.map( (element, index) => {
+                    if(element.in_reply_to_postid === null){
+                        return (
+                        <div className="explore_post">
 
-                        <Tweet postText={element.posttext} likes={element.likes_count} img={element.img_id} rebuzz={element.rebuzz_count}/>
-                    </div>)
-                }else{
+                            <Tweet postText={element.posttext} likes={element.likes_count} img={element.img_id} rebuzz={element.rebuzz_count}/>
+                        </div>)
+                    }else{
 
-                }
-            })}
-        </div>
+                    }
+                })}
+            </div>
+        
+
         
      //   console.log(content)
         return content;
+       
+    }
+
+    logoutConfirm = (e) => {
+        console.log(e);
+        message.success('You have been logged out.');
+
+        this.props.history.push({
+            pathname:"/",
+            state:{
+                username:null,
+                userid:null
+            }
+        });  
+      }
+      
+      logoutCancel(e) {
+        console.log(e);
+        message.error('Log Out Cancelled');
+      }
+
+    updateHeader = () =>{
+        if (this.state.headerText){
+            return this.state.headerText;
+        }
+        else {
+            return "Recent Buzz";
+        }
     }
     render() {
         const posts = this.createContentExploreTweets();
-
+        const text = this.updateHeader();
         return (
             <div>
                 <Layout>
@@ -146,14 +218,18 @@ export default class Explore extends Component {
                             <div className="explore_page_header_search">
                                 <center>
                                 <Search placeholder="Search BeeYa" style={{ width: 400, 
-                                    alignItems:"center", borderRadius:"30px"}} size="large" enterButton/>
+                                    alignItems:"center", borderRadius:"30px"}} size="large" enterButton
+                                    onSearch={(value) => this.searchPostsFetch(value)} allowClear
+                                    minLength={1}/>
+                                    
                                 </center>
                             </div>
                             
                             <div className="explore_page_header_text">
                                 <center>
                                     <br/>
-                                    {"New Global Buzzes"}
+                                    
+                                    {text}
                                 </center>
                             </div>
                         </div>
