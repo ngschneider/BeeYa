@@ -3,7 +3,7 @@ exports.select = (sql_statement, cb) => {
 var responce = [];
 var con = mysql.createConnection(
         {
-                host: "ec2-3-134-94-116.us-east-2.compute.amazonaws.com",
+                host: "ec2-3-22-234-88.us-east-2.compute.amazonaws.com",
                 user: "beeya",
                 password: "beeya123",
                 database: "beeyaDB",
