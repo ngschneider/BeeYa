@@ -13,7 +13,7 @@ class FetchServer {
     fetchRouteServer(ROUTE,DATA_SEND,options,callback){
       // DATA_SEND SHOULD BE JSON
       
-        let mysqlServer="http://localhost:444";
+        let mysqlServer="ec2-3-22-234-88.us-east-2.compute.amazonaws.com:444";
         fetch( mysqlServer + ROUTE + "" +  JSON.stringify(DATA_SEND) + "" ,options)
         .then(res => res.json())
         .then(

@@ -182,7 +182,7 @@ export default class Landing extends React.Component {
 
                 <Form
                     
-                    name="basic"
+                    name="login"
                     initialValues={{ remember: true }}
                     style={{margin: "10px 10px 10px"}}
                     onFinish={(values) => this.handleSubmit(values)}
@@ -221,14 +221,30 @@ export default class Landing extends React.Component {
                     <Divider style={{borderColor: "black", borderWidth:"0.5px"}} plain="false">OR</Divider>
                 </div>
                 
-
-                
                 {/*Create New Account Button opens Modal*/}
-                <Button type="primary" htmlType="button" size={"large"} 
+                <Button name="createAccountButton" type="primary" htmlType="button" size={"large"} 
                 style={{paddingInline:"50px", backgroundColor:"rebeccapurple", borderColor:"rebeccapurple"}}
                 wrapperCol={{span:24}}
                 onClick={this.showModal}>Create New Account</Button>
+            </div>
 
+
+                
+            </div>
+            </Content>
+            <div className = "footer">
+                <Footer style={{textAlign: 'right', 
+                            position: 'absolute',
+                            left: 0,
+                            bottom: 0,
+                            width: '100%',
+                            background: 'gold'
+                                }}>©2021 BeeYa, Inc.</Footer>
+            </div>
+
+           
+
+            <div className="Modal">
                 <Modal title="Create New Account" visible={this.state.visibleModal} 
                 onOk={this.handleOk} onCancel={this.handleCancel}
                 footer={null}
@@ -253,7 +269,7 @@ export default class Landing extends React.Component {
                             >
                                 <Input
                                     addonBefore={"@"} size="large" placeholder="Username" maxLength={15}
-                                    style={{borderRadius: "5px"}}/>
+                                    style={{borderRadius: "5px"}} name="usernameInput"/>
                             </Form.Item>
                         </Col>
                         <Col span={12}>
@@ -266,7 +282,7 @@ export default class Landing extends React.Component {
                             >
                                 <Input
                                     size="large" placeholder="Display Name" maxLength={25}
-                                    style={{borderRadius: "5px"}}/>
+                                    style={{borderRadius: "5px"}} name="displayNameInput"/>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -277,7 +293,8 @@ export default class Landing extends React.Component {
                                 wrapperCol={{span:24}}
                             >
                                 <Input
-                                    size="large" placeholder="Email (Optional)" style={{borderRadius: "5px"}}/>
+                                    size="large" placeholder="Email (Optional)" style={{borderRadius: "5px"}}
+                                    name="emailInput"/>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -291,31 +308,18 @@ export default class Landing extends React.Component {
                             >
                                 <Input
                                     size="large" placeholder="Password" style={{borderRadius: "5px"}} type="password"
-                                    />
+                                    name="passwordInput"/>
                             </Form.Item>
                         </Col>
                     </Row>
                     <Form.Item>
-                    <Button type="primary" htmlType="submit" size={'large'} 
-                    style={{paddingInline:"200px", backgroundColor:"green", borderColor:"green", height:"50px"
+                    <Button type="primary" htmlType="submit" size={'large'} name="registerButton" 
+                    style={{paddingInline:"200px", backgroundColor:"green", borderColor:"green", height:"50px",
                     }}>Sign Up</Button>
                     </Form.Item>
                 </Form>
                 </Modal>
                 </div>
-            </div>
-            </Content>
-            <div className = "footer">
-                <Footer style={{textAlign: 'right', 
-                            position: 'absolute',
-                            left: 0,
-                            bottom: 0,
-                            width: '100%',
-                            background: 'gold'
-                                }}>©2021 BeeYa, Inc.</Footer>
-            </div>
-
-           
             </Layout>
         )
     }

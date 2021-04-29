@@ -15,13 +15,6 @@ createPost = (userid, text, date, imgName, callback) => {
 	let statement = sqlCommand.insert("Posts", tableRow, tableColumn );
 	sqlCommand.send([statement], (result) => {
 		if(result.errnum == 1){
-			let postCountCol = "postsCount";
-			let statement = sqlCommand.updatePostCount(userid);
-			sqlCommand.send([statement], res =>{
-				if(res){
-					console.log("Post count +1");
-				}
-			});	
 			callback(createPostSuccess())
 		}else {
 			callback(createPostFailed())

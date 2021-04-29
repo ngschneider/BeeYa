@@ -78,9 +78,17 @@ export default class Home extends Component {
         }
         postTweet(input, (response) => {
             console.log(response);
+            this.setState({
+                text:""
+            })
        });
     }
 
+    clearForm = () =>{
+        this.setState({
+            text:""
+        });
+    }
 
     loadPosts = (id) => {
        this.feedPostsFetch(1);
@@ -162,23 +170,23 @@ export default class Home extends Component {
                     }}>
                         {/*Sidebar Menu*/}
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{width:"200px", minWidth:"200px"}}>
-                            <Menu.Item key="1" icon={<HomeOutlined />}>
+                            <Menu.Item key="1" icon={<HomeOutlined />} id="home-option">
                                 Home
                             </Menu.Item>
                             <Menu.Item key="2" icon={<CompassOutlined />}
-                            onClick={this.handleExploreClick}>
+                            onClick={this.handleExploreClick}  id="explore-option">
                                 Explore
                             </Menu.Item>
                             <Menu.Item key="3" icon={<UserOutlined />}
-                            onClick={this.handleProfileClick}>
+                            onClick={this.handleProfileClick}  id="profile-option">
                                 Profile
                             </Menu.Item>
                             <Menu.Item key="4" icon={<SettingFilled/>}
-                            onClick={this.handleSettingsClick}>
+                            onClick={this.handleSettingsClick}  id="settings-option">
                                 Settings
                             </Menu.Item>
                             {/*Log Out PopConfirm*/}
-                            <Menu.Item key="5" icon={<LogoutOutlined/>}>
+                            <Menu.Item key="5" icon={<LogoutOutlined/>}  id="logout-option">
                                     <Popconfirm
                                             title="Are you sure you would like to log out?"
                                             onConfirm={this.logoutConfirm}
@@ -206,14 +214,17 @@ export default class Home extends Component {
                                 <h1>{this.state.username+"'s "} Home </h1>
                                 <Divider style={{borderWidth: "1px", borderColor: "grey"}}></Divider>
                                 <div className = "statusTextArea">
-                                    <Form>
+                                    <Form
+                                    onSubmit={this.setState({
+                                        text:''
+                                    })}>
                                     <Row>
                                         <Col span={2}>
                                             
                                         </Col>
                                         <Col span={22}>
                                             <Form.Item>
-                                            <TextArea showCount maxLength={140} onChange={this.onChange} 
+                                            <TextArea showCount maxLength={140} onChange={this.onChange} id="status" 
                                                 bordered={false} placeholder="What's all the buzz?" autoSize={{ minRows: 2, maxRows: 2 }} size="small"
                                                 style={{marginLeft: '20px'}}/> 
                                             </Form.Item>
@@ -237,7 +248,8 @@ export default class Home extends Component {
                                                 <div className = "tweetButton">
                                                 <Button type="primary" style={{borderRadius:"10px",
                                                 marginLeft:"85px", borderWidth:"0px", fontWeight:"bold"}}
-                                                onClick={() => this.tweet(this.state.userid,this.state.text)}
+                                                onClick={() => this.tweet(this.state.userid,this.state.text), 
+                                                    console.log("Button Clicked")}
                                                 > Buzz </Button>
                                                 </div>
                                             </Form.Item>
